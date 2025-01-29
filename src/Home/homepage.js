@@ -31,13 +31,13 @@ function Homepage() {
                 <a href="#about">About Us</a>
               </li>
               <li>
-                <a href="#about">Cart</a>
+                <Link to="/cart">Cart</Link>
               </li>
             </ul>
           </nav>
         </div>
         <div className="navbar-">
-          <a href="#login">Log In</a> | <a href="#signup">Sign Up</a>
+          <Link to="/login">Log In</Link> | <Link to="/signup">Sign Up</Link>
         </div>
       </header>
       {/* Hero Section */}

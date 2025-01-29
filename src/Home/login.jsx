@@ -1,41 +1,48 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import axios from "axios"; // Import Axios for API requests
 import "./login.css"; // Import CSS for styling
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-  // Handle form submission
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!email || !password) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    setError(""); // Clear error if inputs are valid
-
-    // Store user data in localStorage (optional)
-    localStorage.setItem("userEmail", email);
-
-    // Redirect or show success message
-    alert("Login successful!");
+    axios
+      .post("http://localhost:3001/", formData)
+      .then((results) => {
+        console.log(results);
+        if (results.data === "Success") {
+          navigate("/category");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-      {error && <p className="error-message">{error}</p>}
+      <h2>Log in</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label>Email</label>
+          <label>Username</label>
           <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            name="username"
+            placeholder="Enter your username"
+            value={formData.username}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -44,14 +51,15 @@ function Login() {
           <label>Password</label>
           <input
             type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={handleInputChange}
             required
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
