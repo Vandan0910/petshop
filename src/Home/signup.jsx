@@ -1,56 +1,47 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Ensure this is imported for navigation
+import axios from "axios"; // Import Axios for API requests
 import "./signup.css"; // Import CSS for styling
 
 function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-  // Handle form submission
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!name || !email || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email.");
-      return;
-    }
-
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    setError(""); // Clear error if inputs are valid
-
-    // Store user data in localStorage (optional)
-    localStorage.setItem("user", JSON.stringify({ name, email }));
-
-    // Redirect or show success message
-    alert("Signup successful!");
+    axios
+      .post("http://localhost:3001/register", formData)
+      .then((results) => {
+        console.log(results);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div className="signup-container">
       <h2>Sign Up</h2>
-      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label>Name</label>
           <input
             type="text"
+            name="username"
             placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formData.username}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -59,9 +50,10 @@ function Signup() {
           <label>Email</label>
           <input
             type="email"
+            name="email"
             placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -70,20 +62,10 @@ function Signup() {
           <label>Set Password</label>
           <input
             type="password"
+            name="password"
             placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={formData.password}
+            onChange={handleInputChange}
             required
           />
         </div>

@@ -39,7 +39,7 @@ function Categories() {
                 <a href="#about">About Us</a>
               </li>
               <li>
-                <a href="#about">Cart</a>
+                <Link to="/cart">Cart</Link>
               </li>
             </ul>
           </nav>
@@ -53,19 +53,19 @@ function Categories() {
       <div className="category">
         <h2>Dogs</h2>
         <div className="cards">
-          <Link to="/dog/card1" className="card">
+          <Link to="/dog/food" className="card">
             <img src={D1} alt="Dog 1" />
             <p>Dog Food</p>
           </Link>
-          <Link to="/dog/card2" className="card">
+          <Link to="/dog/grooming" className="card">
             <img src={D21} alt="Dog 2" />
             <p>Dog Gromming</p>
           </Link>
-          <Link to="/dog/card3" className="card">
+          <Link to="/dog/accessories" className="card">
             <img src={D31} alt="Dog 3" />
             <p>Dog Accessories</p>
           </Link>
-          <Link to="/dog/card4" className="card">
+          <Link to="/dog/toys" className="card">
             <img src={D41} alt="Dog 4" />
             <p>Dog Toys</p>
           </Link>
@@ -76,19 +76,19 @@ function Categories() {
       <div className="category">
         <h2>Cats</h2>
         <div className="cards">
-          <Link to="/cat/card1" className="card">
+          <Link to="/cat/food" className="card">
             <img src={C2} alt="Cat 1" />
             <p>Cat Food</p>
           </Link>
-          <Link to="/cat/card2" className="card">
+          <Link to="/cat/grooming" className="card">
             <img src={C21} alt="Cat 2" />
             <p>Cat Gromming</p>
           </Link>
-          <Link to="/cat/card3" className="card">
+          <Link to="/cat/accessories" className="card">
             <img src={C34} alt="Cat 3" />
             <p>Cat Accessories</p>
           </Link>
-          <Link to="/cat/card4" className="card">
+          <Link to="/cat/toys" className="card">
             <img src={C38} alt="Cat 4" />
             <p>Cat Toys</p>
           </Link>
